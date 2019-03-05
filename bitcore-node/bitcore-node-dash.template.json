@@ -1,24 +1,24 @@
 {
-  "network": "${BITCOIN_NETWORK_NAME}",
-  "port": 3001,
+  "network": "${DASH_NETWORK_NAME}",
+  "port": 3005,
   "services": [
     "bitcoind",
-    "insight-api",
-    "insight-ui",
+    "insight-api-dash",
+    "insight-ui-dash",
     "web"
   ],
   "servicesConfig": {
     "bitcoind": {
       "spawn": {
         "datadir": "./data",
-        "exec": "/root/bitcoin-node/node_modules/bitcore-node/bin/bitcoind"
+        "exec": "./dashd"
       }
     },
-    "insight-ui": {
+    "insight-ui-dash": {
       "routePrefix": "${UI_ROUTE_PREFIX}",
       "apiPrefix": "${API_ROUTE_PREFIX}"
     },
-    "insight-api": {
+    "insight-api-dash": {
       "routePrefix": "${API_ROUTE_PREFIX}",
       "rateLimiterOptions": {
         "limit": "${API_LIMIT_COUNT}",

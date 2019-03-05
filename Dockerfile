@@ -15,29 +15,30 @@ RUN apt-get update && \
   wget https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64.deb && \
   dpkg -i dumb-init_*.deb
 
-EXPOSE 3001 3232 6667 8333 18333
+EXPOSE 3005 3232 9999 19999
 
-WORKDIR /root/bitcoin-node
+WORKDIR /root/dash-node
 COPY bitcore-node ./
 RUN npm config set package-lock false && \
-  npm install 
+  npm install && \
+  ln -s /root/.bitcore/data/dashd ./dashd 
 
 RUN apt-get purge -y \
   g++ make python gcc && \
   apt-get autoclean && \
   apt-get autoremove -y && \
   rm -rf \
-  node_modules/bitcore-node/test \
-  node_modules/bitcore-node/bin/bitcoin-*/bin/bitcoin-qt \
-  node_modules/bitcore-node/bin/bitcoin-*/bin/test_bitcoin \
-  node_modules/bitcore-node/bin/bitcoin-*-linux64.tar.gz \
+  node_modules/bitcore-node-dash/test \
+  /root/.bitcore/data/dashcore-*/bin/dash-qt \
+  /root/.bitcore/data/dashcore-*/bin/test_dash \
+  /root/.bitcore/data/dashcore-*-linux64.tar.gz \
   /dumb-init_*.deb \
   /root/.npm \
   /root/.node-gyp \
   /tmp/* \
   /var/lib/apt/lists/*
 
-ENV BITCOIN_LIVENET 0
+ENV DASH_LIVENET 0
 ENV API_ROUTE_PREFIX "api"
 ENV UI_ROUTE_PREFIX ""
 
@@ -56,8 +57,8 @@ ENV API_LIMIT_WHITELIST_INTERVAL 10800000
 ENV API_LIMIT_BLACKLIST_COUNT 0
 ENV API_LIMIT_BLACKLIST_INTERVAL 10800000
 
-HEALTHCHECK --interval=5s --timeout=5s --retries=5 --start-period=120s CMD curl -s "http://localhost:3001/{$API_ROUTE_PREFIX}/sync" | jq -r -e ".status==\"finished\""
+HEALTHCHECK --interval=5s --timeout=5s --retries=5 CMD curl -s "http://localhost:3005/{$API_ROUTE_PREFIX}/sync" | jq -r -e ".status==\"finished\""
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--", "./bitcore-node-entrypoint.sh"]
 
-VOLUME /root/bitcoin-node/data
+VOLUME /root/dash-node/data
