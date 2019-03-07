@@ -1,7 +1,7 @@
 FROM node:4.8.7-slim
 
 RUN apt-get update && \
-  apt-get install -y \
+  apt-get install -y  --no-install-recommends \
   g++ \
   libzmq3-dev \
   libzmq3-dbg \
@@ -13,7 +13,9 @@ RUN apt-get update && \
   patch \
   && \
   wget https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64.deb && \
-  dpkg -i dumb-init_*.deb
+  dpkg -i dumb-init_*.deb \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 3005 3232 9999 19999
 
