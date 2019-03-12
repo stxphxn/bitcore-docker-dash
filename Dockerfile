@@ -2,15 +2,15 @@ FROM node:4.8.7-slim
 
 RUN apt-get update && \
   apt-get install -y  --no-install-recommends \
-  g++ \
-  libzmq3-dev \
-  libzmq3-dbg \
-  libzmq3 \
-  make \
-  python \
-  gettext-base \
-  jq \
-  patch \
+  g++=8.3 \
+  libzmq3-dev=4.0.5 \
+  libzmq3-dbg=4.0.5 \
+  libzmq3=4.0.5 \
+  make=4.2 \
+  python=2.7 \
+  gettext-base=0.19.3 \
+  jq=1.4-2.1 \
+  patch=2.7.5-1 \
   && \
   wget https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64.deb && \
   dpkg -i dumb-init_*.deb \
@@ -30,7 +30,7 @@ RUN apt-get purge -y \
   apt-get autoclean && \
   apt-get autoremove -y && \
   rm -rf \
-  node_modules/bitcore-node-dash/test \
+  node_modules/dashcore-node/test \
   /root/.bitcore/data/dashcore-*/bin/dash-qt \
   /root/.bitcore/data/dashcore-*/bin/test_dash \
   /root/.bitcore/data/dashcore-*-linux64.tar.gz \
