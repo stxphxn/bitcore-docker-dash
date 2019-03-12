@@ -20,10 +20,9 @@ RUN apt-get update && \
 EXPOSE 3005 3232 9999 19999
 
 WORKDIR /root/dash-node
-COPY bitcore-node ./
+COPY dashcore-node ./
 RUN npm config set package-lock false && \
-  npm install && \
-  ln -s /root/.bitcore/data/dashd ./dashd 
+  npm install
 
 RUN apt-get purge -y \
   g++ make python gcc && \
@@ -31,9 +30,9 @@ RUN apt-get purge -y \
   apt-get autoremove -y && \
   rm -rf \
   node_modules/dashcore-node/test \
-  /root/.bitcore/data/dashcore-*/bin/dash-qt \
-  /root/.bitcore/data/dashcore-*/bin/test_dash \
-  /root/.bitcore/data/dashcore-*-linux64.tar.gz \
+  node_modules/dashcore-node/bin/dash-*/bin/dash-qt \
+  node_modules/dashcore-node/bin/dash-*/bin/test_dash \
+  node_modules/dashcore-node/bin/dash-*.tar.gz \
   /dumb-init_*.deb \
   /root/.npm \
   /root/.node-gyp \
@@ -61,6 +60,6 @@ ENV API_LIMIT_BLACKLIST_INTERVAL 10800000
 
 HEALTHCHECK --interval=5s --timeout=5s --retries=5 CMD curl -s "http://localhost:3005/{$API_ROUTE_PREFIX}/sync" | jq -r -e ".status==\"finished\""
 
-ENTRYPOINT ["/usr/bin/dumb-init", "--", "./bitcore-node-entrypoint.sh"]
+ENTRYPOINT ["/usr/bin/dumb-init", "--", "./dashcore-node-entrypoint.sh"]
 
 VOLUME /root/dash-node/data
