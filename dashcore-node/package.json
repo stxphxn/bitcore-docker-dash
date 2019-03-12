@@ -1,0 +1,13 @@
+{
+  "name": "dashcore-insight-docker",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@dashevo/dashcore-lib": "0.15.3",
+    "@dashevo/dashcore-node": "3.0.6",
+    "@dashevo/insight-api": "0.6.0",
+    "@dashevo/insight-ui": "0.4.3"
+  }
+}

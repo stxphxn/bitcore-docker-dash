@@ -12,5 +12,5 @@ export API_LIMIT_DISABLE=$([ "$API_LIMIT_ENABLE" == 1 ] && echo "false" || echo 
 export API_LIMIT_WHITELIST_JSON=$(array2json $API_LIMIT_WHITELIST)
 export API_LIMIT_BLACKLIST_JSON=$(array2json $API_LIMIT_BLACKLIST)
 
-envsubst < ./bitcore-node-dash.template.json > ./bitcore-node-dash.json
-./node_modules/.bin/bitcore-node-dash start
+envsubst < ./dashcore-node.template.json > ./dashcore-node.json
+./node_modules/.bin/dashcore-node start
