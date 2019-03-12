@@ -22,7 +22,8 @@ EXPOSE 3005 3232 9999 19999
 WORKDIR /root/dash-node
 COPY dashcore-node ./
 RUN npm config set package-lock false && \
-  npm install
+  npm install && \
+  ln -s /root/.bitcore/data/dashd ./dashd && \
 
 RUN apt-get purge -y \
   g++ make python gcc && \
@@ -30,9 +31,9 @@ RUN apt-get purge -y \
   apt-get autoremove -y && \
   rm -rf \
   node_modules/dashcore-node/test \
-  node_modules/dashcore-node/bin/dash-*/bin/dash-qt \
-  node_modules/dashcore-node/bin/dash-*/bin/test_dash \
-  node_modules/dashcore-node/bin/dash-*.tar.gz \
+  /root/.bitcore/data/dashcore-*/bin/dash-qt \
+  /root/.bitcore/data/dashcore-*/bin/test_dash \
+  /root/.bitcore/data/dashcore-*-linux64.tar.gz \
   /dumb-init_*.deb \
   /root/.npm \
   /root/.node-gyp \
